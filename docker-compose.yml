@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  comissao-app:
+    build: .
+    container_name: comissao-app
+    ports:
+      - "80:80"        # Nginx lidando com Frontend
+      - "8000:8000"    # FastAPI expondo a API pro Frontend local
+    volumes:
+      - ./IMPOSTOS.xlsx:/app/IMPOSTOS.xlsx
+      - ./NCM.xlsx:/app/NCM.xlsx
+      - ./.tmp:/app/.tmp
+    restart: always
+    environment:
+      - PYTHONUNBUFFERED=1
