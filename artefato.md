@@ -2,6 +2,19 @@
 
 Este guia explica como redirecionar o serviço `systemd` que roda no seu container LXC Proxmox para uma nova pasta clonada do GitHub (`comissa-custom`), recriando também o ambiente virtual (`venv`) que não pode ser copiado de outro sistema.
 
+## 0. Como Identificar o Nome do Serviço
+Caso você não saiba qual o nome exato do seu serviço, você pode listar todos os serviços que estão rodando no seu servidor e procurar por um nome que pareça com a sua aplicação (ex: `app.service`, `comissao.service`):
+
+```bash
+systemctl list-units --type=service --state=running
+```
+*(No nosso caso acima, o serviço foi identificado como **`comissao-api.service`**).*
+
+Para checar os detalhes e a pasta de um serviço e confirmar se achou o certo:
+```bash
+systemctl status <nome-do-servico>
+```
+
 ## 1. Recriar o Ambiente Virtual (venv) Limpo
 Quando o projeto é clonado do GitHub, a pasta `venv` baixada vêm com caminhos absolutos e atalhos quebrados, próprios do computador anterior. Você deve recriá-la:
 
